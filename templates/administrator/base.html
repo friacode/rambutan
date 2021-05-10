@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+  {% include 'administrator/head.html' %}
+<body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="sticky">
+
+  <div class="wrapper">
+
+    {% include 'administrator/sidebar.html' %}
+
+    <div class="main">
+      {% include 'administrator/header.html' %}
+
+      <main class="content">
+        {% block content %}{% endblock %}
+      </main>
+
+      {% include 'administrator/footer.html' %}
+    </div>
+
+  </div>
+
+  <script src="{% static 'administrator/js/app.js' %}"></script>
+
+</body>
+
+</html>

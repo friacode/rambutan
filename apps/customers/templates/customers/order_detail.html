@@ -1,0 +1,19 @@
+{% load humanize %}
+<table class="table">
+  <thead>
+    <tr>
+      <th style="width:40%;">상품</th>
+      <th style="width:25%">주문수량</th>
+      <th style="width:25%">가격</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in order_detail %}
+    <tr>
+      <td><a href="{% url 'products:detail' pk=item.product.pk %}" target="_blank">{{ item.product.name }}</a></td>
+      <td>{{ item.quantity }}</td>
+      <td>{{ item.total_price|intcomma }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

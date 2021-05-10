@@ -1,0 +1,25 @@
+.product-list .card {
+    cursor: pointer;
+}
+
+.no-product {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-top: 3rem;
+}
+
+.product-detail-card-layout  {
+    margin: 2rem auto;
+    border-bottom: 1px solid;
+    padding-bottom: .5rem;
+}
+
+.product-detail-card-layout .label {
+    display: inline-block;
+    margin-right: 2rem;
+    font-weight: bold;
+}
+
+.product-detail-card-layout .object-data {
+    display: inline-block;
+}

@@ -1,0 +1,81 @@
+<nav id="sidebar" class="sidebar">
+  <div class="sidebar-content js-simplebar" data-simplebar="init">
+    <div class="simplebar-wrapper" style="margin: 0px;">
+      <div class="simplebar-height-auto-observer-wrapper">
+        <div class="simplebar-height-auto-observer"></div>
+      </div>
+      <div class="simplebar-mask">
+        <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+          <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
+            <div class="simplebar-content" style="padding: 0px;">
+              <a class="sidebar-brand" href="{% url 'home:administrator_index_page' %}">
+                <span class="align-middle me-3">Rambutan</span>
+              </a>
+
+              <ul class="sidebar-nav">
+                <li class="sidebar-item {% if nav == 'dashboard' %}active{% endif %}">
+                  <a href='{% url 'home:administrator_index_page' %}' class="sidebar-link">
+                    <span class="align-middle">Dashboards</span>
+                  </a>
+                </li>
+                <li class="sidebar-item {% if nav == 'product' %}active{% endif %}">
+                  <a data-bs-target="#product" data-bs-toggle="collapse" class="sidebar-link">
+                    <span class="align-middle">상품관리</span>
+                  </a>
+                  <ul id="product" class="sidebar-dropdown list-unstyled collapse {% if nav == 'product' %}show{% endif %}" data-bs-parent="#sidebar">
+                    <li class="sidebar-item {% if sub_nav == 'list' %}active{% endif %}"><a class="sidebar-link" href="{% url 'products:list' %}">상품 리스트</a></li>
+                    <li class="sidebar-item {% if sub_nav == 'category' %}active{% endif %}"><a class="sidebar-link" href="{% url 'category:list' %}">카테고리</a></li>
+                    <li class="sidebar-item {% if sub_nav == 'brand' %}active{% endif %}"><a class="sidebar-link" href="{% url 'brand:list' %}">브랜드</a></li>
+                  </ul>
+                </li>
+
+                <li class="sidebar-item {% if nav == 'order' %}active{% endif %}">
+                  <a data-bs-target="#orders" data-bs-toggle="collapse" class="sidebar-link">
+                    <span class="align-middle">주문관리</span>
+                  </a>
+                  <ul id="orders" class="sidebar-dropdown list-unstyled collapse {% if nav == 'order' %}show{% endif %}" data-bs-parent="#sidebar">
+                    <li class="sidebar-item {% if nav == 'order' %}active{% endif %}"><a class="sidebar-link" href="{% url 'manage_order:list' %}">주문내역</a></li>
+                  </ul>
+                </li>
+
+                <li class="sidebar-item {% if nav == 'customer' %}active{% endif %}">
+                  <a data-bs-target="#customer" data-bs-toggle="collapse" class="sidebar-link">
+                    <span class="align-middle">고객관리</span>
+                  </a>
+                  <ul id="customer" class="sidebar-dropdown list-unstyled collapse {% if nav == 'customer' %}show{% endif %}" data-bs-parent="#sidebar">
+                    <li class="sidebar-item {% if nav == 'customer' %}active{% endif %}"><a class="sidebar-link" href="{% url 'customers:list' %}">고객 리스트</a></li>
+                  </ul>
+                </li>
+
+                <li class="sidebar-item {% if nav == 'default' %}active{% endif %}">
+                  <a data-bs-target="#default" data-bs-toggle="collapse" class="sidebar-link">
+                    <span class="align-middle">기초정보 설정</span>
+                  </a>
+                  <ul id="default" class="sidebar-dropdown list-unstyled collapse {% if nav == 'default' %}show{% endif %}" data-bs-parent="#sidebar">
+                    <li class="sidebar-item {% if sub_nav == 'ship' %}active{% endif %}"><a class="sidebar-link" href="{% url 'default:shipping_list' %}">배송방식</a></li>
+                    <li class="sidebar-item {% if sub_nav == 'payment' %}active{% endif %}"><a class="sidebar-link" href="{% url 'default:payment_list' %}">결제방식</a></li>
+                    <li class="sidebar-item {% if sub_nav == 'currency' %}active{% endif %}"><a class="sidebar-link" href="{% url 'default:currency_list' %}">통화</a></li>
+                  </ul>
+                </li>
+
+                <li class="sidebar-item">
+                  <a class="sidebar-link" href="{% url 'home:client_index_page' %}" target="_blank">
+                    <span class="align-middle">쇼핑몰 이동</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="simplebar-placeholder" style="width: auto; height: 1408px;"></div>
+    </div>
+
+    <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+      <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+    </div>
+    <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+      <div class="simplebar-scrollbar" style="height: 233px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+    </div>
+  </div>
+</nav>

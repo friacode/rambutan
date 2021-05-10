@@ -1,0 +1,109 @@
+{% extends 'administrator/base.html' %}
+{% load bootstrap5 %}
+{% load humanize %}
+{% block content %}
+
+<div class="container-fluid p-0">
+
+  <a href="{% url 'products:delete' pk=target_product.pk %}" class="btn btn-danger float-end mt-n1"><i class="fas fa-trash"></i> 상품 삭제하기</a>
+  <a href="{% url 'products:update' pk=target_product.pk %}" class="btn btn-primary float-end mt-n1" style="margin-right: 10px;"><i class="fas fa-edit"></i> 상품 수정하기</a>
+  <h1 class="h3 mb-3">{{ target_product.name }}</h1>
+
+  <div class="row product-detail">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">상품 기본정보</h5>
+        </div>
+        <div class="card-body">
+          <div class="col-12 product-detail-card-layout">
+            <label class="col-md-1 label">상품 이미지</label>
+            <div class="col-md-9 object-data">
+              <div class="row g-0 mt-1">
+{% for item in target_product.productimage_set.all %}
+                <div class="col-6 col-md-4 col-lg-4 col-xl-3">
+                  <img src="{{item.image.url}}" class="img-fluid pe-2" alt="" style="height: 200px;" />
+                </div>
+{% endfor %}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 product-detail-card-layout">
+            <label class="col-md-1 label">상품 이름</label>
+            <div class="col-md-9 object-data">{{ target_product.name }}</div>
+          </div>
+
+          <div class="col-12 product-detail-card-layout">
+            <label class="col-md-1 label">상품 코드</label>
+            <div class="col-md-9 object-data">{{ target_product.code }}</div>
+          </div>
+
+          <div class="col-12 product-detail-card-layout">
+            <label class="col-md-1 label">상품 간략설명</label>
+            <div class="col-md-9 object-data">{{ target_product.summary }}</div>
+          </div>
+
+          <div class="col-12 product-detail-card-layout">
+            <label class="col-md-1 label">상품 상세설명</label>
+            <div class="col-md-9 object-data">{{ target_product.description | linebreaksbr }}</div>
+          </div>
+
+          <div class="col-12 product-detail-card-layout">
+            <label class="col-md-1 label">카테고리</label>
+            <div class="col-md-9 object-data">{{ target_product.category }}</div>
+          </div>
+
+          <div class="col-12 product-detail-card-layout">
+            <label class="col-md-1 label">브랜드</label>
+            <div class="col-md-9 object-data">{{ target_product.brand }}</div>
+          </div>
+
+          <div class="col-12 product-detail-card-layout">
+            <label class="col-md-1 label">상품타입</label>
+            <div class="col-md-9 object-data">{{ target_product.types }}</div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">상품 가격정보</h5>
+        </div>
+        <div class="card-body">
+          <div class="col-12 product-detail-card-layout">
+            <label class="col-md-1 label">상품 기본 가격</label>
+            <div class="col-md-9 object-data">{{ target_product.price | intcomma }} {{ currency.name }}</div>
+          </div>
+
+          <div class="col-12 product-detail-card-layout">
+            <label class="col-md-1 label">상품 할인 옵션</label>
+            <div class="col-md-9 object-data">{{ target_product.saleOption }}</div>
+          </div>
+
+          <div class="col-12 product-detail-card-layout">
+            <label class="col-md-1 label">상품 할인 금액</label>
+            <div class="col-md-9 object-data">{{ target_product.salePrice | intcomma }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">상품 재고</h5>
+        </div>
+
+        <div class="card-body">
+          <div class="col-12 product-detail-card-layout">
+            <label class="col-md-1 label">상품 현재 재고</label>
+            <div class="col-md-9 object-data">{{ target_product.inventory | intcomma }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+

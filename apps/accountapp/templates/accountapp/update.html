@@ -1,0 +1,46 @@
+{% extends 'client/base.html' %}
+{% load bootstrap5 %}
+{% block content %}
+
+  {% include 'client/accounts/breadcrumb.html' %}
+
+  <script>
+    $(function() {
+      $('#id_phone').val('{{ phone }}');
+    });
+  </script>
+
+<section class="pt-7 pb-12">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+
+        <!-- Heading -->
+        <h3 class="mb-10">내 정보</h3>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-3">
+        {% include 'client/accounts/nav.html' %}
+      </div>
+      <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
+
+        <!-- Form -->
+        <form action="{% url 'accounts:update' pk=target_user.pk %}" method="post">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-12">
+              {% bootstrap_form form %}
+            </div>
+            <div class="col-12">
+              <button class="btn btn-dark" type="submit">저장</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

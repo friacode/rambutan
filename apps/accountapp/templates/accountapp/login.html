@@ -1,0 +1,38 @@
+{% extends 'client/base.html' %}
+{% load bootstrap5 %}
+{% block content %}
+<section class="py-12">
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-12 col-md-6">
+
+        <!-- Card -->
+        <div class="card card-lg mb-10 mb-md-0">
+          <div class="card-body">
+
+            <!-- Heading -->
+            <h6 class="mb-7">로그인</h6>
+
+            <!-- Form -->
+            <form action="" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="/" />
+              <div class="row">
+                <div class="col-12">
+                  {% bootstrap_form form %}
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-sm btn-dark" type="submit">로그인</button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

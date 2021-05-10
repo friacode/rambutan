@@ -1,0 +1,68 @@
+{% extends 'client/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+  <section class="pt-7 pb-12">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <!-- Heading -->
+          <h3 class="mb-10">배송지</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-3">
+          {% include 'client/accounts/nav.html' %}
+        </div>
+        <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
+          <div class="row">
+            {% if target_address %}
+              {% for item in target_address %}
+            <div class="col-12 col-lg-6">
+              <!-- Card -->
+              <div class="card card-lg bg-light mb-8">
+                <div class="card-body">
+                  <!-- Heading -->
+                  <h6 class="mb-6">
+                    {{ item.title }}
+                  </h6>
+                  <!-- Text -->
+                  <p class="text-muted mb-0">
+                    {{ item.name }} <br>
+                    {{ item.postcode }} <br>
+                    {{ item.addr }} <br>
+                    {{ item.addr_detail }} <br>
+                  </p>
+                  <!-- Action -->
+                  <div class="card-action card-action-right">
+                    <!-- Button -->
+                    <a class="btn btn-xs btn-circle btn-white-primary" href="{% url 'address:update' pk=item.pk %}">
+                      <i class="fe fe-edit-2"></i>
+                    </a>
+                    <!-- Button -->
+                    <button class="btn btn-xs btn-circle btn-white-primary">
+                      <i class="fe fe-x"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+              {% endfor %}
+            {% else %}
+            <div class="col-12">배송지 목록이 없습니다.</div>
+            {% endif %}
+
+            <div class="col-12">
+              <!-- Button -->
+              <a class="btn btn-block btn-lg btn-outline-border" href="{% url 'address:create' %}">
+                배송지 추가 <i class="fe fe-plus"></i>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends 'administrator/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+  <div class="container-fluid p-0">
+
+    <h1 class="h3 mb-3">주문내역</h1>
+
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">주문내역 리스트</h5>
+          </div>
+          <div class="card-body">
+            <div id="datatables-clients_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+              <div class="row">
+                <div class="col-sm-12 col-md-12">
+                  <div id="datatables-clients_filter" class="dataTables_filter">
+                    <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatables-clients"></label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <table id="datatables-clients" class="table table-striped dataTable no-footer dtr-inline" style="width: 100%;" role="grid" aria-describedby="datatables-clients_info">
+                    <thead>
+                      <tr role="row">
+                        <th tabindex="0" aria-controls="datatables-clients" rowspan="1" colspan="1" style="width: 33px;">#</th>
+                        <th tabindex="0" aria-controls="datatables-clients" rowspan="1" colspan="1" style="width: 157px;">주문코드</th>
+                        <th tabindex="0" aria-controls="datatables-clients" rowspan="1" colspan="1" style="width: 208px;">고객</th>
+                        <th tabindex="0" aria-controls="datatables-clients" rowspan="1" colspan="1" style="width: 73px;">주문일시</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    {% if order_list %}
+                      {% for item in order_list %}
+                      <tr role="row" class="odd">
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{% url 'manage_order:detail' code=item.code %}">{{ item.code }}</a></td>
+                        <td>{{ item.user.last_name }}, {{ item.user.first_name }}</td>
+                        <td><span class="badge bg-success">{{ item.status }}</span></td>
+                      </tr>
+                      {% endfor %}
+                    {% else %}
+                      <tr><td colspan="5" style="text-align: center;">주문 내역이 없습니다.</td></tr>
+                    {% endif %}
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12 col-md-5">
+                  <div class="dataTables_info" id="datatables-clients_info" role="status" aria-live="polite">Showing 1 to 10 of 20 entries</div>
+                </div>
+                <div class="col-sm-12 col-md-7">
+                  <div class="dataTables_paginate paging_simple_numbers" id="datatables-clients_paginate">
+                    <ul class="pagination">
+                      <li class="paginate_button page-item previous disabled" id="datatables-clients_previous">
+                        <a href="#" aria-controls="datatables-clients" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                      </li>
+                      <li class="paginate_button page-item active">
+                        <a href="#" aria-controls="datatables-clients" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+                      </li>
+                      <li class="paginate_button page-item ">
+                        <a href="#" aria-controls="datatables-clients" data-dt-idx="2" tabindex="0" class="page-link">2</a>
+                      </li>
+                      <li class="paginate_button page-item next" id="datatables-clients_next">
+                        <a href="#" aria-controls="datatables-clients" data-dt-idx="3" tabindex="0" class="page-link">Next</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}

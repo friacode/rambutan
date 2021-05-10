@@ -1,0 +1,50 @@
+{% extends 'administrator/base.html' %}
+{% block content %}
+  <div class="container-fluid p-0">
+
+    <a href="{% url 'category:create' %}" class="btn btn-primary float-end mt-n1"><i class="fas fa-plus"></i> 카테고리 추가하기</a>
+    <h1 class="h3 mb-3">카테고리</h1>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">카테고리 리스트 </h5>
+            <h6 class="card-subtitle text-muted">상품을 분류할 카테고리를 설정할 수 있습니다.</h6>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width:20%;">#</th>
+                <th style="width:40%">카테고리</th>
+                <th class="d-none d-md-table-cell" style="width:25%">등록일</th>
+                <th>액션</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% if category_list %}
+              {% for item in category_list %}
+              <tr>
+                <td>{{ item.pk }}</td>
+                <td>{{ item.name }}</td>
+                <td class="d-none d-md-table-cell">{{ item.create_at }}</td>
+                <td class="table-action">
+                  <a href="{% url 'category:update' pk=item.pk %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                  <a href="{% url 'category:delete' pk=item.pk %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                </td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="4" style="text-align: center;font-weight: bold;">카테고리가 등록되지 않았습니다. </td>
+              </tr>
+            {% endif %}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

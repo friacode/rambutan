@@ -1,0 +1,90 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+  <div class="container">
+
+    <!-- Brand -->
+    <a class="navbar-brand" href="{% url 'home:client_index_page' %}">
+      Rambutan
+      <!--img src="{% static 'administrator/img/logo.png' %}" alt="Logo" class="img-fluid" width="80" height="80" /-->
+    </a>
+
+    <!-- Toggler -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapse -->
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+
+      <!-- Nav -->
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item dropdown hovered">
+
+          <!-- Toggle -->
+          <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="true">카테고리</a>
+
+          <!-- Menu -->
+          <div class="dropdown-menu">
+            <div class="card card-lg">
+              <div class="card-body">
+                <ul class="list-styled font-size-sm">
+                  {% for item in category %}
+                  <li class="list-styled-item">
+                    <a class="list-styled-link" href="{% url 'shop:list' %}?category={{ item.name }}">{{ item.name }}</a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        {% if not user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'accounts:login' %}">로그인</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'accounts:create' %}">회원가입</a>
+        </li>
+        {% endif %}
+      </ul>
+
+      <!-- Nav -->
+      <ul class="navbar-nav flex-row">
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" href="#modalSearch">
+            <i class="fe fe-search"></i>
+          </a>
+        </li>
+        {% if not user.is_authenticated %}
+        <li class="nav-item ml-lg-n4">
+          <a class="nav-link" href="{% url 'accounts:login' %}">
+            <i class="fe fe-user"></i>
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item ml-lg-n4">
+          <a class="nav-link" href="{% url 'accounts:update' pk=user.pk %}">
+            <i class="fe fe-user"></i>
+          </a>
+        </li>
+        <li class="nav-item ml-lg-n4">
+          <a class="nav-link" href="{% url 'wishlist:list' %}">
+            <i class="fe fe-heart"></i>
+          </a>
+        </li>
+        <li class="nav-item ml-lg-n4">
+          <a class="nav-link" href="{% url 'cart:list' %}">
+            <span data-cart-items="{{ cart_count }}">
+              <i class="fe fe-shopping-cart"></i>
+            </span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+
+    </div>
+
+  </div>
+</nav>
+

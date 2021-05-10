@@ -1,0 +1,227 @@
+{% extends 'client/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+  {% include 'client/accounts/breadcrumb.html' %}
+
+  <section class="pt-7 pb-12">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+
+          <!-- Heading -->
+          <h3 class="mb-10">주문상세</h3>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-3">
+          {% include 'client/accounts/nav.html' %}
+        </div>
+
+        <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
+
+          <!-- Order -->
+          <div class="card card-lg mb-5 border">
+            <div class="card-body pb-0">
+
+              <!-- Info -->
+              <div class="card card-sm">
+                <div class="card-body bg-light">
+                  <div class="row">
+                    <div class="col-6 col-lg-3">
+
+                      <!-- Heading -->
+                      <h6 class="heading-xxxs text-muted">주문번호:</h6>
+
+                      <!-- Text -->
+                      <p class="mb-lg-0 font-size-sm font-weight-bold">
+                        {{ order.code }}
+                      </p>
+
+                    </div>
+                    <div class="col-6 col-lg-3">
+
+                      <!-- Heading -->
+                      <h6 class="heading-xxxs text-muted">주문날짜:</h6>
+
+                      <!-- Text -->
+                      <p class="mb-lg-0 font-size-sm font-weight-bold">
+                        <time datetime="{{ order.create_at|date:'Y-m-d' }}">
+                          {{ order.create_at|date:'Y-m-d H:i' }}
+                        </time>
+                      </p>
+
+                    </div>
+                    <div class="col-6 col-lg-3">
+
+                      <!-- Heading -->
+                      <h6 class="heading-xxxs text-muted">상태:</h6>
+
+                      <!-- Text -->
+                      <p class="mb-0 font-size-sm font-weight-bold">
+                        {{ order.status }}
+                      </p>
+
+                    </div>
+                    <div class="col-6 col-lg-3">
+
+                      <!-- Heading -->
+                      <h6 class="heading-xxxs text-muted">주문금액:</h6>
+
+                      <!-- Text -->
+                      <p class="mb-0 font-size-sm font-weight-bold">
+                        {{ total_price|intcomma }} {{ currency }}
+                      </p>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="card-footer">
+
+              <!-- Heading -->
+              <h6 class="mb-7">주문상품 ({{ target_order_detail|length }})</h6>
+
+              <!-- Divider -->
+              <hr class="my-5">
+
+              <!-- List group -->
+              <ul class="list-group list-group-lg list-group-flush-y list-group-flush-x">
+                {% for item in target_order_detail %}
+                <li class="list-group-item">
+                  <div class="row align-items-center">
+                    <div class="col-4 col-md-3 col-xl-2">
+
+                      <!-- Image -->
+                      <a href="{% url 'shop:detail' pk=item.product.pk %}"><img src="{{ item.product.productimage_set.first.shop_list_thumbnail.url }}" alt="..." class="img-fluid"></a>
+
+                    </div>
+                    <div class="col">
+
+                      <!-- Title -->
+                      <p class="mb-4 font-size-sm font-weight-bold">
+                        <a class="text-body" href="{% url 'shop:detail' pk=item.product.pk %}">{{ item.product.name }}</a> <br>
+                        <span class="text-muted">{{ item.product.price|intcomma }} {{ currency }}</span>
+                      </p>
+
+                      <!-- Text -->
+                      <div class="font-size-sm text-muted">
+                        수량: {{ item.quantity }}
+                      </div>
+
+                    </div>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+
+            </div>
+          </div>
+
+          <!-- Total -->
+          <div class="card card-lg mb-5 border">
+            <div class="card-body">
+
+              <!-- Heading -->
+              <h6 class="mb-7">결제금액</h6>
+
+              <!-- List group -->
+              <ul class="list-group list-group-sm list-group-flush-y list-group-flush-x">
+                <li class="list-group-item d-flex">
+                  <span>상품금액</span>
+                  <span class="ml-auto">{{ price|intcomma }} {{ currency }}</span>
+                </li>
+                <li class="list-group-item d-flex">
+                  <span>배송비</span>
+                  <span class="ml-auto">{{ shipping_fee|intcomma }} {{ currency }}</span>
+                </li>
+                <li class="list-group-item d-flex">
+                  <span>할인금액</span>
+                  <span class="ml-auto">{{ sale_price|intcomma }} {{ currency }}</span>
+                </li>
+                <li class="list-group-item d-flex font-size-lg font-weight-bold">
+                  <span>총 금액</span>
+                  <span class="ml-auto">{{ total_price|intcomma }} {{ currency }}</span>
+                </li>
+              </ul>
+
+            </div>
+          </div>
+
+          <!-- Details -->
+          <div class="card card-lg border">
+            <div class="card-body">
+
+              <!-- Heading -->
+              <h6 class="mb-7">배송지 정보</h6>
+
+              <!-- Content -->
+              <div class="row">
+                <div class="col-12 col-md-4">
+
+                  <!-- Heading -->
+                  <p class="mb-4 font-weight-bold">
+                    Billing Address:
+                  </p>
+
+                  <p class="mb-7 mb-md-0 text-gray-500">
+                    Daniel Robinson, <br>
+                    3997 Raccoon Run, <br>
+                    Kingston, 45644, <br>
+                    United States, <br>
+                    6146389574
+                  </p>
+
+                </div>
+                <div class="col-12 col-md-4">
+
+                  <!-- Heading -->
+                  <p class="mb-4 font-weight-bold">
+                    Shipping Address:
+                  </p>
+
+                  <p class="mb-7 mb-md-0 text-gray-500">
+                    Daniel Robinson, <br>
+                    3997 Raccoon Run, <br>
+                    Kingston, 45644, <br>
+                    United States, <br>
+                    6146389574
+                  </p>
+
+                </div>
+                <div class="col-12 col-md-4">
+
+                  <!-- Heading -->
+                  <p class="mb-4 font-weight-bold">
+                    Shipping Method:
+                  </p>
+
+                  <p class="mb-7 text-gray-500">
+                    Standart Shipping <br>
+                    (5 - 7 days)
+                  </p>
+
+                  <!-- Heading -->
+                  <p class="mb-4 font-weight-bold">
+                    Payment Method:
+                  </p>
+
+                  <p class="mb-0 text-gray-500">
+                    Debit Mastercard
+                  </p>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

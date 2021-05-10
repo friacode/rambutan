@@ -1,0 +1,38 @@
+{% extends 'client/base.html' %}
+{% load bootstrap5 %}
+{% block content %}
+<section class="py-12">
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-12 col-md-6">
+
+        <!-- Card -->
+        <div class="card card-lg">
+          <div class="card-body">
+
+            <!-- Heading -->
+            <h6 class="mb-7">회원가입</h6>
+
+            <!-- Form -->
+            <form action="{% url 'accounts:create' %}" method="post">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-12">
+                  {% bootstrap_form form %}
+                </div>
+
+                <div class="col-12">
+                  <button class="btn btn-sm btn-dark" type="submit">회원가입</button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'administrator/base.html' %}
+{% block content %}
+
+  <div class="container-fluid p-0">
+
+    <div class="row">
+      <div class="col-md-10 col-xl-8 mx-auto">
+        <h1 class="text-center">{{ target_currency.name }}</h1>
+        <p class="lead text-center mb-4">정말 이 통화를 삭제하시겠습니까? 삭제하면 복구할 수 없습니다.</p>
+
+        <form class="text-center" action="{% url 'default:currency_delete' pk=target_currency.pk %}" method="post">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-danger rounded-pill col-6 mt-3" value="삭제하기">
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

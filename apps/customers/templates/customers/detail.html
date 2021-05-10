@@ -1,0 +1,163 @@
+{% extends 'administrator/base.html' %}
+{% load static %}
+{% block content %}
+  <script>
+    function load_order_detail(order_code) {
+      $.ajax({
+        url: '{% url 'customers:order_detail' %}',
+        data: {'order_code': order_code},
+        method: 'GET',
+        dataType: 'html'
+      }).done(function (data) {
+          $('#order_detail_content').empty().append(data);
+      }).fail(function(xhr, status, errorThrown) {
+
+      });
+    }
+  </script>
+  <div class="container-fluid p-0">
+
+    <h1 class="h3 mb-3">고객 프로필</h1>
+
+    <div class="row">
+      <div class="col-md-4 col-xl-3">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="card-title mb-0">상세 프로필</h5>
+          </div>
+          <div class="card-body text-center">
+            <img src="{% static 'administrator/img/no-user.jpg' %}" alt="Stacie Hall" class="img-fluid rounded-circle mb-2" width="128" height="128">
+            <h5 class="card-title mb-0">{{ target_customer.user.last_name }}, {{ target_customer.user.first_name }}</h5>
+            <div class="text-muted mb-2">
+              {% if target_customer.status %}
+                Active
+              {% else %}
+                Unsubscribe
+              {% endif %}
+            </div>
+
+            <!--div>
+              <a class="btn btn-primary btn-sm" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Message</a>
+            </div-->
+          </div>
+          <hr class="my-0">
+          <div class="card-body">
+            <h5 class="h6 card-title">About</h5>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user feather-sm me-1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                {{ target_customer.user.username }}
+              </li>
+              <li class="mb-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail feather-sm me-1"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                {{ target_customer.user.email }}
+              </li>
+              <li class="mb-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smartphone feather-sm me-1"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                {{ target_customer.phone }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-8 col-xl-9">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">위시리스트 목록</h5>
+          </div>
+          <div class="card-body h-100">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th style="width:40%;">상품</th>
+                  <th style="width:25%">등록날짜</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in wishlist %}
+                <tr>
+                  <td><a href="{% url 'products:detail' pk=item.product.pk %}" target="_blank">{{ item.product.name }}</a></td>
+                  <td>{{ item.create_at|date:'Y-m-d H:i' }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">장바구니 목록</h5>
+          </div>
+          <div class="card-body h-100">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th style="width:40%;">상품</th>
+                  <th style="width:25%">수량</th>
+                  <th style="width:25%">상태</th>
+                  <th class="d-none d-md-table-cell" style="width:25%">등록날짜</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in cart %}
+                <tr>
+                  <td><a href="{% url 'products:detail' pk=item.product.pk %}" target="_blank">{{ item.product.name }}</a></td>
+                  <td>{{ item.quantity }}</td>
+                  <td>{{ item.status }}</td>
+                  <td class="d-none d-md-table-cell">{{ item.create_at|date:'Y-m-d H:i' }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">주문 목록</h5>
+          </div>
+          <div class="card-body h-100">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th style="width:10%;">주문코드</th>
+                  <th style="width:50%;">배송주소</th>
+                  <th style="width:15%">주문상태</th>
+                  <th class="d-none d-md-table-cell" style="width:25%">주문날짜</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in order %}
+                <tr>
+                  <td><a href="#" onclick="load_order_detail('{{ item.code }}')" data-bs-toggle="modal" data-bs-target="#orderDetailModal">{{ item.code }}</a></td>
+                  <td>{{ item.address }}</td>
+                  <td>{{ item.status }}</td>
+                  <td class="d-none d-md-table-cell">{{ item.create_at|date:'Y-m-d H:i' }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal fade" id="orderDetailModal" tabindex="-1" style="display: none;" aria-modal="true" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">주문 상세내역</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body m-3" id="order_detail_content"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

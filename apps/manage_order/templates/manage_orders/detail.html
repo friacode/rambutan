@@ -1,0 +1,158 @@
+{% extends 'administrator/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+  <div class="container-fluid p-0">
+
+    <h1 class="h3 mb-3">주문 상세 내역</h1>
+
+    <div class="row">
+
+      <div class="col-lg-6 col-xxl-6">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">주문 기본정보</h5>
+          </div>
+          <div class="card-body">
+
+            <dl class="row">
+              <dt class="col-4 col-xxl-3">주문번호</dt>
+              <dd class="col-8 col-xxl-9">
+                <p class="mb-1">{{ order.code }}</p>
+              </dd>
+
+              <dt class="col-4 col-xxl-3">주문일시</dt>
+              <dd class="col-8 col-xxl-9">
+                <p class="mb-1">{{ order.create_at|date:'Y-m-d H:i' }}</p>
+              </dd>
+
+              <dt class="col-4 col-xxl-3 mb-0">주문 상태</dt>
+              <dd class="col-8 col-xxl-9 mb-0">
+                <p class="mb-0">{{ order.status }}</p>
+              </dd>
+            </dl>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-lg-6 col-xxl-6">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">고객 정보</h5>
+          </div>
+          <div class="card-body">
+
+            <dl class="row">
+              <dt class="col-4 col-xxl-3">이름</dt>
+              <dd class="col-8 col-xxl-9">
+                <p class="mb-1">{{ order.user.last_name }}, {{ order.user.first_name }}</p>
+              </dd>
+
+              <dt class="col-4 col-xxl-3">이메일</dt>
+              <dd class="col-8 col-xxl-9">
+                <p class="mb-1">{{ order.user.email }}</p>
+              </dd>
+
+              <dt class="col-4 col-xxl-3 mb-0">연락처</dt>
+              <dd class="col-8 col-xxl-9 mb-0">
+                <p class="mb-0">{{ order.user.customer_set.first.phone }}</p>
+              </dd>
+            </dl>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-lg-6 col-xxl-6">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">주문금액</h5>
+          </div>
+          <div class="card-body">
+
+            <dl class="row">
+              <dt class="col-4 col-xxl-3">주문금액</dt>
+              <dd class="col-8 col-xxl-9">
+                <p class="mb-1">{{ price|intcomma }}</p>
+              </dd>
+
+              <dt class="col-4 col-xxl-3">할인금액</dt>
+              <dd class="col-8 col-xxl-9">
+                <p class="mb-1">{{ sale_price|intcomma }}</p>
+              </dd>
+
+              <dt class="col-4 col-xxl-3 mb-0">배송비</dt>
+              <dd class="col-8 col-xxl-9 mb-0">
+                <p class="mb-0">{{ shipping_fee|intcomma }}</p>
+              </dd>
+            </dl>
+
+            <hr>
+
+            <dl class="row">
+
+              <dt class="col-4 col-xxl-3 mb-0">주문 총액</dt>
+              <dd class="col-8 col-xxl-9 mb-0">
+                <p class="mb-0">{{ total_price|intcomma }}</p>
+              </dd>
+
+            </dl>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">주문 상품</h5>
+          </div>
+          <div class="card-body">
+            <div id="datatables-clients_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <table id="datatables-clients" class="table table-striped dataTable no-footer dtr-inline" style="width: 100%;" role="grid" aria-describedby="datatables-clients_info">
+                    <thead>
+                      <tr role="row">
+                        <th tabindex="0" aria-controls="datatables-clients" rowspan="1" colspan="1" style="width: 33px;">#</th>
+                        <th tabindex="0" aria-controls="datatables-clients" rowspan="1" colspan="1" style="width: 157px;">주문 상품</th>
+                        <th tabindex="0" aria-controls="datatables-clients" rowspan="1" colspan="1" style="width: 120px;">구매수량</th>
+                        <th tabindex="0" aria-controls="datatables-clients" rowspan="1" colspan="1" style="width: 208px;">가격</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for item in order_detail %}
+                      <tr role="row" class="odd">
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{% url 'products:detail' pk=item.product.pk %}">{{ item.product.name }}</a></td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.total_price|intcomma }}</td>
+                      </tr>
+                    {% endfor %}
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}

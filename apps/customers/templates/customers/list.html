@@ -1,0 +1,88 @@
+{% extends 'administrator/base.html' %}
+{% load static %}
+{% block content %}
+  <div class="container-fluid p-0">
+
+    <h1 class="h3 mb-3">고객 리스트</h1>
+
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">고객</h5>
+          </div>
+          <div class="card-body">
+            <div id="datatables-clients_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+              <div class="row">
+                <div class="col-sm-12 col-md-12">
+                  <div id="datatables-clients_filter" class="dataTables_filter">
+                    <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatables-clients"></label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <table id="datatables-clients" class="table table-striped dataTable no-footer dtr-inline" style="width: 100%;" role="grid" aria-describedby="datatables-clients_info">
+                    <thead>
+                      <tr role="row">
+                        <th rowspan="1" colspan="1" style="width: 30px;">#</th>
+                        <th rowspan="1" colspan="1" style="width: 152px;">이름</th>
+                        <th rowspan="1" colspan="1" style="width: 115px;">아이디</th>
+                        <th rowspan="1" colspan="1" style="width: 202px;">이메일</th>
+                        <th rowspan="1" colspan="1" style="width: 70px;">가입상태</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% if customers_list %}
+                      {% for item in customers_list %}
+                    <tr role="row" class="odd">
+                      <td class="dtr-control"><img src="{% static 'administrator/img/no-user.jpg' %}" width="32" height="32" class="rounded-circle my-n1" alt="Avatar"></td>
+                      <td class="sorting_1"><a href="{% url 'customers:detail' pk=item.pk %}">{{ item.user.last_name }}, {{ item.user.first_name }}</a></td>
+                      <td>{{ item.user.username }}</td>
+                      <td>{{ item.user.email }}</td>
+                      <td>
+                        {% if item.status == True %}
+                        <span class="badge bg-success">Active</span>
+                        {% else %}
+                        <span class="badge bg-success">Unsubscribe</span>
+                        {% endif %}
+                      </td>
+                    </tr>
+                      {% endfor %}
+                    {% else %}
+                    <tr><td colspan="5" style="text-align: center;">고객이 없습니다.</td></tr>
+                    {% endif %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-5">
+                  <div class="dataTables_info" id="datatables-clients_info" role="status" aria-live="polite">Showing 1 to 10 of 20 entries</div>
+                </div>
+                <div class="col-sm-12 col-md-7">
+                  <div class="dataTables_paginate paging_simple_numbers" id="datatables-clients_paginate">
+                    <ul class="pagination">
+                      <li class="paginate_button page-item previous disabled" id="datatables-clients_previous">
+                        <a href="#" aria-controls="datatables-clients" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                      </li>
+                      <li class="paginate_button page-item active">
+                        <a href="#" aria-controls="datatables-clients" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+                      </li>
+                      <li class="paginate_button page-item ">
+                        <a href="#" aria-controls="datatables-clients" data-dt-idx="2" tabindex="0" class="page-link">2</a>
+                      </li>
+                      <li class="paginate_button page-item next" id="datatables-clients_next">
+                        <a href="#" aria-controls="datatables-clients" data-dt-idx="3" tabindex="0" class="page-link">Next</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

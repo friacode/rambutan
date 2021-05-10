@@ -1,0 +1,43 @@
+{% extends 'administrator/base.html' %}
+{% load bootstrap5 %}
+{% block content %}
+
+  <style>
+    label {
+      margin-bottom: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+  </style>
+
+  <div class="container-fluid p-0">
+    <h1 class="h3 mb-3">{{ target_product.name }}</h1>
+
+    <div class="row product-update">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">상품</h5>
+          </div>
+          <div class="card-body">
+            <form action="{% url 'products:update' pk=target_product.pk %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                <label class="form-label w-100" for="image_file">상품 이미지</label>
+                <input type="file" name="product_img_file" id="image_file" multiple>
+                <small class="form-text text-muted">Example block-level help text here.</small>
+              </div>
+              {% bootstrap_form form %}
+              <input type="submit" class="btn btn-dark mt-3" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}
+
