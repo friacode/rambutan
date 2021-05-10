@@ -35,8 +35,8 @@
 
         <!-- List group -->
         <ul class="list-group list-group-lg list-group-flush-x mb-6">
-          {% if target_cart %}
-            {% for item in target_cart %}
+          {% if carts %}
+            {% for item in carts %}
           <li class="list-group-item">
             <div class="row align-items-center">
               <div class="col-3">
@@ -65,7 +65,7 @@
 
                   <!-- Remove -->
                   <a class="font-size-xs text-gray-400 ml-auto" href="{% url 'cart:delete' %}?product_pk={{ item.product.pk }}">
-                    <i class="fe fe-x"></i> Remove
+                    <i class="fe fe-x"></i> 삭제
                   </a>
 
                 </div>

@@ -7,7 +7,7 @@ class ShippingTypeCreationForm(ModelForm):
 
     class Meta:
         model = ShippingType
-        fields = ['name']
+        fields = ['name', 'fee', 'status']
 
 
 class PaymentTypeCreationForm(ModelForm):

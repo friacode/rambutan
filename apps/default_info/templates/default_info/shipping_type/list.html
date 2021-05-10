@@ -15,8 +15,10 @@
           <table class="table">
             <thead>
               <tr>
-                <th style="width:20%;">#</th>
-                <th style="width:40%">배송방식</th>
+                <th style="width:10%;">#</th>
+                <th style="width:15%">배송방식</th>
+                <th style="width:15%">배송비</th>
+                <th style="width:10%">사용여부</th>
                 <th class="d-none d-md-table-cell" style="width:25%">등록일</th>
                 <th>액션</th>
               </tr>
@@ -27,6 +29,10 @@
               <tr>
                 <td>{{ item.pk }}</td>
                 <td>{{ item.name }}</td>
+                <td>{{ item.fee }} {{ currency.name }}</td>
+                <td>
+                  {% if item.status == True %}사용{% else %}미사용{% endif %}
+                </td>
                 <td class="d-none d-md-table-cell">{{ item.create_at }}</td>
                 <td class="table-action">
                   <a href="{% url 'default:shipping_update' pk=item.pk %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>

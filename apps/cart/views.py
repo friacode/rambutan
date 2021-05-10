@@ -11,12 +11,13 @@ from apps.coreapp.views import getCategory, getCurrency
 
 class CartListView(ListView):
     model = Cart
-    context_object_name = 'target_cart'
+    # context_object_name = 'target_cart'
     template_name = 'cart/list.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         carts = Cart.objects.filter(user=self.request.user)
+        context['carts'] = carts
 
         sale_price = 0
         org_price = 0

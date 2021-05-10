@@ -40,6 +40,9 @@ class AdminShippingTypeListView(ListView):
         context = super(AdminShippingTypeListView, self).get_context_data(**kwargs)
         context['nav'] = "default"
         context['sub_nav'] = "ship"
+
+        currency = CurrencyType.objects.get(status=True)
+        context['currency'] = currency
         return context
 
 

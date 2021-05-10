@@ -4,6 +4,8 @@ from django.db import models
 # Create your models here.
 class ShippingType(models.Model):
     name = models.CharField('배송타입', max_length=100, null=False)
+    fee = models.IntegerField('배송비', null=True, default=0)
+    status = models.BooleanField('사용여부', default=False, null=True)
     create_at = models.DateTimeField('Create Date', auto_now=False, auto_now_add=True)
     updated = models.DateTimeField('Update Date', auto_now=True, auto_now_add=False)
 

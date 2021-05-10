@@ -8,7 +8,7 @@ from django.views.generic import CreateView, RedirectView, UpdateView, ListView,
 from apps.cart.models import Cart
 from apps.orders.models import Order, OrderDetail
 from apps.coreapp.views import getCategory
-from apps.default_info.models import CurrencyType
+from apps.default_info.models import CurrencyType, ShippingType
 
 import string
 import random
@@ -18,6 +18,8 @@ LENGTH = 8
 def clientOrderCreateView(request):
     context = {}
     cart = Cart.objects.filter(user=request.user)
+    shipping_fee = ShippingType.objects.get(status=True)
+
     string_pool = string.ascii_uppercase + string.digits
     code = ''
     for item in range(LENGTH):
@@ -35,7 +37,7 @@ def clientOrderCreateView(request):
             sale_ratio = item.product.price * (item.product.salePrice * 0.01)
             sale_price = int(item.product.price - sale_ratio)
 
-        total_price = item.product.price - sale_price + 2500
+        total_price = item.product.price - sale_price + shipping_fee.fee
 
         order_detail = OrderDetail(
             order=order,
@@ -43,7 +45,7 @@ def clientOrderCreateView(request):
             quantity=item.quantity,
             price=item.product.price * item.quantity,
             sale_price=sale_price * item.quantity,
-            shipping_fee=2500,
+            shipping_fee=shipping_fee.fee,
             total_price=total_price * item.quantity
         )
         order_detail.save()
